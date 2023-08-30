@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TesteObj : MonoBehaviour
-{
+public class TesteObj : MonoBehaviour{
     public GameObject objetoPrefab;
     public Vector3 limiteMin;
     public Vector3 limiteMax;
