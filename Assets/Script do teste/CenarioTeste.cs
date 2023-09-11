@@ -27,7 +27,7 @@ public class CenarioTeste : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
             // Agendar a ativação do cenário após 3 segundos (ajuste o valor conforme necessário)
-            Invoke("ActivateScenario", 18f);
+            Invoke("ActivateScenario", 10f);
         }
     }
      void ActivateScenario()
