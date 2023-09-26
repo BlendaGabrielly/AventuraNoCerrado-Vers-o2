@@ -8,6 +8,10 @@ public class TesteMov : MonoBehaviour
     private Rigidbody2D corpoPers;
     private Animator anim;
     private SpriteRenderer spritRend;
+
+    public GameObject projectilePrefab;
+   public float shotForce = 1000.0f;
+
    // public Camera cam;
    public Camera cam;
 
@@ -40,6 +44,7 @@ public class TesteMov : MonoBehaviour
         movHorizontal = Input.GetAxis("Horizontal");
         Movimento();
         Pulo();
+        atirar();
     }
     private void Movimento(){
       corpoPers.velocity = new Vector3(movHorizontal * velocidadeMov, corpoPers.velocity.y);
@@ -71,6 +76,21 @@ public class TesteMov : MonoBehaviour
             }
         }
     }
+    void atirar(){
+        if (Input.GetKeyDown(KeyCode.T)){
+          Shoot();
+      }
+    }
+   void Shoot()
+{
+    GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+    Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+
+    Vector2 direction = spritRend.flipX ? Vector2.left : Vector2.right; // Verifica se o jogador está virado para a esquerda ou direita
+    rb.AddForce(direction * shotForce);
+}
+
+
     void bufferDePulo(){
         if (conta_pulo){
             corpoPers.AddForce(new Vector2(corpoPers.velocity.x, forcaPulo), ForceMode2D.Impulse);

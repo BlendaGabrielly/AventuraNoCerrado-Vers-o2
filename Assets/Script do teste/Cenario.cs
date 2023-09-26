@@ -48,11 +48,7 @@ public class Cenario : MonoBehaviour
 
     void Update()
     {
-        // Verifica se a tecla "A" foi pressionada e recicla a plataforma do jogador
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Recycle(myplat);
-        }
+        
 
         // Calcula a distância entre a posição do jogador e o ponto de referência da plataforma atual
         float distance = player.position.x - currentPlatsPoint.position.x;
@@ -78,4 +74,13 @@ public class Cenario : MonoBehaviour
         platform.transform.position = new Vector3(offset, 0, 0);
         offset += 52;
     }
+    void OnTriggerEnter(Collider other){
+    // Verifica se o jogador colidiu com a última plataforma
+    if (other.gameObject.CompareTag("ultima"))
+    {
+        // Atualiza a posição do primeiro cenário
+        Recycle(currentPlat[0].gameObject);
+    }
+}
+
 }

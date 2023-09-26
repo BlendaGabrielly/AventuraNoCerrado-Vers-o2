@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Lago
+  - Arbusto
+  - madeira
+  - Caju
+  - Enemy
+  - ultima
   layers:
   - Default
   - TransparentFX

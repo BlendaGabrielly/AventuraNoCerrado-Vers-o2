@@ -9,6 +9,7 @@ public class CenarioTeste : MonoBehaviour
     public GameObject game2;
     public GameObject game3;
     public GameObject game4; // cenário
+     private bool isActivatingPlatforms = false;
     public List<GameObject> platforms = new List<GameObject>(); // Lista de prefabs de plataformas
     public List<Transform> currentPlat = new List<Transform>(); // Lista de instâncias de plataformas
     public int offset; // Deslocamento entre plataformas
@@ -26,8 +27,12 @@ public class CenarioTeste : MonoBehaviour
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
-            // Agendar a ativação do cenário após 3 segundos (ajuste o valor conforme necessário)
-            Invoke("ActivateScenario", 10f);
+                // Chama o método ActivateScenario após 10 segundos
+                //Invoke("ActivateScenario", 10f);
+                InvokeRepeating("ActivateScenario", 10f, 10f);
+
+             // Chama o método RecyclePlat a cada 5 segundos, começando depois de 15 segundos
+             //InvokeRepeating("RecyclePlat", 15f, 5f);
         }
     }
      void ActivateScenario()
@@ -50,17 +55,33 @@ public class CenarioTeste : MonoBehaviour
 
         isScenarioActivated = true;
     }
+     void ActivatePlatforms()
+    {
+        if (isActivatingPlatforms) return;
+
+        StartCoroutine(ActivatePlatformsWithDelay());
+    }
+     IEnumerator ActivatePlatformsWithDelay()
+    {
+        isActivatingPlatforms = true;
+
+        foreach (GameObject platformPrefab in platforms)
+        {
+            Transform p = Instantiate(platformPrefab, new Vector3(offset, 0, 0), transform.rotation).transform;
+            currentPlat.Add(p);
+            offset += 52;
+
+            yield return new WaitForSeconds(1f); // Intervalo de 1 segundo entre as instâncias
+        }
+
+        isActivatingPlatforms = false;
+    }
     void Update()
     {
         // Verifica se o cenário está ativado antes de atualizar
         if (!isScenarioActivated)
             return;
 
-         // Verifica se a tecla "A" foi pressionada e recicla a plataforma do jogador
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Recycle(myplat);
-        }
 
         // Calcula a distância entre a posição do jogador e o ponto de referência da plataforma atual
         float distance = player.position.x - currentPlatsPoint.position.x;
@@ -80,11 +101,12 @@ public class CenarioTeste : MonoBehaviour
         }
     }
 
-    // Reposiciona a plataforma passada como argumento e atualiza o deslocamento
-    public void Recycle(GameObject platform)
+
+void Recycle(GameObject platform)
     {
         platform.transform.position = new Vector3(offset, 0, 0);
         offset += 52;
     }
 }
+
 
