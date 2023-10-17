@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TesteMov : MonoBehaviour
 {
-
+   public GameObject audio_Madeira;
     private Rigidbody2D corpoPers;
     private Animator anim;
     private SpriteRenderer spritRend;
@@ -125,6 +125,9 @@ public class TesteMov : MonoBehaviour
               velocidadeMov =velobat;
               cam.ShakeIt();
               Invoke("retorno", 2f);
+              GameObject prefab = Instantiate(audio_Madeira, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, 
+              this.gameObject.transform.position.z), Quaternion.identity);
+              Destroy(prefab.gameObject, 1.5f);
            }      
         // if(collider.gameObject.tag=="Caju"){
          //     velocidadeMov =velocidadeMov*2;
