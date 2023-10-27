@@ -23,12 +23,14 @@ public class Madeira : MonoBehaviour
         //Debug.Log("Posição atual:"+boxColliderPosition);    
      //  Debug.Log("Posição inicial"+initialPosition);
     }
-    void OnCollisionEnter2D(Collision2D collision){
-      if(collision.gameObject.tag=="Player"){
-          Invoke("Falling",time);
-          Invoke("RestoreObject",1f);
-      }
+void OnCollisionEnter2D(Collision2D collision){
+    if(collision.gameObject.tag=="Player"){
+        initialPosition = transform.position; // Atualiza a posição inicial para a posição atual
+        Invoke("Falling", time);
+        Invoke("RestoreObject", 1f);
     }
+}
+
 /*void RestoreObject(){
    // initialPosition = new Vector3(transform.position.x + distanciaX, transform.position.y, transform.position.z);
     boxColliderPosition = initialPosition;
@@ -58,5 +60,4 @@ void RestoreObject()
         box.isTrigger=true;
     }
 }
-
 

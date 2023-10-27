@@ -9,10 +9,12 @@ public class GameController : MonoBehaviour
     public GameObject gameOver;
     public static GameController insta;
     private bool isPaused = false;
+    public AudioSource audioSource;
+
 
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
          insta=this;
     }
 
@@ -32,7 +34,8 @@ public class GameController : MonoBehaviour
 
     void Pause(){
         isPaused = true;
-        Time.timeScale = 0f; 
+        Time.timeScale = 0f;
+         audioSource.Pause(); 
     }
        public void Continuar(){
         isPaused = false;

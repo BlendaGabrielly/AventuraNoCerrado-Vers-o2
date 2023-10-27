@@ -4,43 +4,66 @@ using UnityEngine;
 
 public class pequi : MonoBehaviour
 {
-    
+   ///List<GameObject> pequis = new List<GameObject>();
+  // private SpriteRenderer spritRend;
+   // public float shotForce = 1000.0f;
+  // public GameObject projectilePrefab;
+
     private SpriteRenderer sr; // Componente de renderização do objeto
     private CircleCollider2D circle; // Componente de colisão circular
     // Start is called before the first frame update
-    public GameObject collected; 
+   public GameObject collected;
+
     public int Score;
     
+    private AudioSource sound;
     void Start()
     {
         sr = GetComponent<SpriteRenderer>(); // Obtém o componente SpriteRenderer do objeto
         sr.enabled = true; // Garante que o SpriteRenderer está ativado
+        sound = GetComponent<AudioSource>();
         circle = GetComponent<CircleCollider2D>(); // Obtém o componente CircleCollider2D do objeto
+       // spritRend = GetComponent<SpriteRenderer>();
         InvokeRepeating("Sprite", 5f, 5f); // Chama o método Sprite a cada 5 segundos
     }
 
     // Update is called once per frame
     void Update()
     {
-       // Invoke("Sprite", 10f);
+       // atirar(); // Adicionando a chamada da função atirar() no Update
     }
+    
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.tag == "Player")
         {
-            // Quando o objeto colide com outro objeto que possui a tag "Player"
-            sr.enabled = false; // Desativa o componente SpriteRenderer (torna o objeto invisível)
-            circle.enabled = false; // Desativa o componente CircleCollider2D (desativa colisões)
-           // Destroy(gameObject, 0.30f); // Destroi o objeto atual após 0.25 segundos
-           collected.SetActive(true);
+            sr.enabled = false;
+            circle.enabled = false;
+            collected.SetActive(true);
            
-           Controller.insta.TotalScore+=Score;
-           Controller.insta.UpdateScoreText();
-
+           // Controller.insta.TotalScore += Score;
+            //Controller.insta.UpdateScoreText();
+            //pequis.Add(gameObject);
+            sound.Play();
         }
     }
-    void Sprite(){
-         sr.enabled = true; // Desativa o componente SpriteRenderer (torna o objeto invisível)
+    /* void atirar(){
+        if (Input.GetKeyDown(KeyCode.T)){
+          Shoot();
+      }
+    }
+   void Shoot()
+{
+    GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+    Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+
+    Vector2 direction = spritRend.flipX ? Vector2.left : Vector2.right; // Verifica se o jogador está virado para a esquerda ou direita
+    rb.AddForce(direction * shotForce);
+}*/
+
+    void Sprite()
+    {
+         sr.enabled = true;
          circle.enabled = true;
     }
 }

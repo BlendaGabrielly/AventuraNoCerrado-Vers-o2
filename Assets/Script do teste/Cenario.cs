@@ -21,6 +21,7 @@ public class Cenario : MonoBehaviour
 
     void Start()
     {
+         
         // Verifica se o objeto do jogador está presente na cena
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
@@ -67,6 +68,17 @@ public class Cenario : MonoBehaviour
             currentPlatsPoint = currentPlat[plataformaIndex].GetComponent<PointE>().point;
         }
     }
+    public void DelayedRecycle()
+{
+    Invoke("Recycle", 60f);
+    Debug.Log("DelayedRecycle chamado");
+}
+
+//public void RecycleFirstPlatform()
+//{
+   // Recycle(currentPlat[0].gameObject);
+//}
+
 
     // Reposiciona a plataforma passada como argumento e atualiza o deslocamento
     public void Recycle(GameObject platform)
@@ -74,13 +86,8 @@ public class Cenario : MonoBehaviour
         platform.transform.position = new Vector3(offset, 0, 0);
         offset += 52;
     }
-    void OnTriggerEnter(Collider other){
-    // Verifica se o jogador colidiu com a última plataforma
-    if (other.gameObject.CompareTag("ultima"))
-    {
-        // Atualiza a posição do primeiro cenário
-        Recycle(currentPlat[0].gameObject);
-    }
-}
+
 
 }
+
+

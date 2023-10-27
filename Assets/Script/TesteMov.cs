@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TesteMov : MonoBehaviour
 {
-   public GameObject audio_Madeira;
+    private AudioSource sound;
     private Rigidbody2D corpoPers;
     private Animator anim;
     private SpriteRenderer spritRend;
 
     public GameObject projectilePrefab;
-   public float shotForce = 1000.0f;
+    public float shotForce = 1000.0f;
 
    // public Camera cam;
    public Camera cam;
@@ -25,14 +25,17 @@ public class TesteMov : MonoBehaviour
     int quantidadeCajus = 0;
 
     private bool estaPulando;
+    public Cenario cen;
 
 
     void Start()
     {
         corpoPers = GetComponent<Rigidbody2D>();
+        Cenario cen = GetComponent<Cenario>();
         anim = GetComponent<Animator>();
         spritRend = GetComponent<SpriteRenderer>();
         cam = FindObjectOfType(typeof(Camera))as Camera;
+        sound = GetComponent<AudioSource>();
 
         vidasAtual = 3;
 
@@ -76,20 +79,6 @@ public class TesteMov : MonoBehaviour
             }
         }
     }
-    void atirar(){
-        if (Input.GetKeyDown(KeyCode.T)){
-          Shoot();
-      }
-    }
-   void Shoot()
-{
-    GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-    Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
-
-    Vector2 direction = spritRend.flipX ? Vector2.left : Vector2.right; // Verifica se o jogador está virado para a esquerda ou direita
-    rb.AddForce(direction * shotForce);
-}
-
 
     void bufferDePulo(){
         if (conta_pulo){
@@ -106,10 +95,12 @@ public class TesteMov : MonoBehaviour
         }if (collision.gameObject.tag == "Enemy"){
             //Destroy(gameObject);
             GameController.insta.ShowGameOver();
+            sound.Play();
             //Destroy(collision.gameObject);
         }
          if(collision.gameObject.tag== "Lago"){
          GameController.insta.ShowGameOver();
+         sound.Play();
          //Destroy(gameObject);
         } 
 
@@ -121,23 +112,17 @@ public class TesteMov : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collider)
     { 
-         if(collider.gameObject.tag=="Arbusto"){
+        if(collider.gameObject.tag=="Arbusto"){
               velocidadeMov =velobat;
               cam.ShakeIt();
               Invoke("retorno", 2f);
-              GameObject prefab = Instantiate(audio_Madeira, new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, 
-              this.gameObject.transform.position.z), Quaternion.identity);
-              Destroy(prefab.gameObject, 1.5f);
            }      
-        // if(collider.gameObject.tag=="Caju"){
-         //     velocidadeMov =velocidadeMov*2;
-          //    Invoke("retorno", 2f);
-          // }
+        
 
         if(collider.gameObject.tag=="Caju"){
            quantidadeCajus = quantidadeCajus + 1;
 
-            velocidadeMov = velocidadeMov*2;
+            velocidadeMov = velocidadeMov+6;
             Invoke("retorno", 2f); 
             Debug.Log("pegou caju: " + quantidadeCajus); 
 
@@ -149,10 +134,30 @@ public class TesteMov : MonoBehaviour
             }
             
         }
+        if(collider.gameObject.tag=="ultima"){
+          cen.DelayedRecycle();
+        }
     }
 
     void retorno(){
            velocidadeMov=8f;
-        }     
+        }  void atirar(){
+        if (Input.GetKeyDown(KeyCode.T)){
+          Shoot();
+      }
 }
+   void Shoot()
+{
+    GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+    Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+
+    Vector2 direction = spritRend.flipX ? Vector2.left : Vector2.right; // Verifica se o jogador está virado para a esquerda ou direita
+    rb.AddForce(direction * shotForce);
+}   
+}
+
+
+  
+
+
 

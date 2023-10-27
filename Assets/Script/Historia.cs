@@ -28,18 +28,30 @@ public class Historia : MonoBehaviour
           historia[0].SetActive(true);
        }
     }
-    public void Next()
+ public void Next()
+{
+    if (index < historia.Length - 1)
     {
+        historia[index].SetActive(false);
         index += 1;
-        for (int i = 0; i < historia.Length; i++)
-        {
-
-            historia[i].SetActive(false);
-            historia[index].SetActive(true);
-            //Restart();
-        }
-        Debug.Log(index);
+        historia[index].SetActive(true);
     }
+    else
+    {
+        startGame();
+    }
+}
+
+public void Previous()
+{
+    if (index > 0)
+    {
+        historia[index].SetActive(false);
+        index -= 1;
+        historia[index].SetActive(true);
+    }
+}
+
 
     public void startGame()
     {
@@ -49,13 +61,4 @@ public class Historia : MonoBehaviour
 
 
 
- public void Previous(){
-     index-=1;
-    for(int i=0;i<historia.Length;i++){
-        historia[i].SetActive(false);
-        historia[index].SetActive(true);
-    }
-    Debug.Log(index);
- }
-  
 }
