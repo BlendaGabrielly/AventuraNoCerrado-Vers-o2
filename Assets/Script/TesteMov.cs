@@ -117,6 +117,8 @@ public class TesteMov : MonoBehaviour
               velocidadeMov =velobat;
               cam.ShakeIt();
               InvokeRepeating("retorno",0.2f,0.1f );
+             //Enemy.tt.Onça_tronco();
+
            }      
     
         if(collider.gameObject.tag=="Caju"){
@@ -124,7 +126,8 @@ public class TesteMov : MonoBehaviour
 
             velocidadeMov += 6;
             InvokeRepeating("reverterRetorno", 0.5f, 0.1f);
-           // Enemy.tt.onça();
+
+            Enemy.tt.Onça_Caju();
             Debug.Log("pegou caju: " + quantidadeCajus);
 
 

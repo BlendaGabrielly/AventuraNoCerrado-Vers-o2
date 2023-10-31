@@ -14,17 +14,9 @@ public class Enemy : MonoBehaviour
     void Start()
     {
       tt=this;
-       /* Onca = GetComponent<BoxCollider2D>();
-        madeiraCollider = GameObject.Find("madeira").GetComponent<BoxCollider2D>();
-
-        Physics2D.IgnoreCollision(madeiraCollider, Onca, true);
-        */
+      
 
         Target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-
-       // Onca = GetComponent<BoxCollider2D>();
-        //madeiraCollider = GameObject.FindGameObjectWithTag("madeira").GetComponent<BoxCollider2D>();
-       // Physics2D.IgnoreCollision( Onca, madeiraCollider, true);
     }
 
     // Update is called once per frame
@@ -42,9 +34,13 @@ public class Enemy : MonoBehaviour
             Destroy(collision.gameObject);
         }*/
      }
-     public void onça(){
-      Speed+=6;
+     public void Onça_Caju(){
+      Speed+=8f;
+       Invoke("RestaurarSpeed", 1f);
      }
+   private void RestaurarSpeed(){
+    Speed = 4f;
+}
      
 }
 
