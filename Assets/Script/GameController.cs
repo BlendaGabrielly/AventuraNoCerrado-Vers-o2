@@ -11,6 +11,10 @@ public class GameController : MonoBehaviour
     private bool isPaused = false;
     public AudioSource audioSource;
 
+     public GameObject Card;
+    private bool isCardActive = true;
+    
+
 
     void Start()
     {
@@ -30,6 +34,7 @@ public class GameController : MonoBehaviour
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
      Debug.Log("Clicavel");
      Continuar();
+     
   }
 
     void Pause(){

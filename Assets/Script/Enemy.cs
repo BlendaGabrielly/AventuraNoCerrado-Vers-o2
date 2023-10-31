@@ -8,9 +8,12 @@ public class Enemy : MonoBehaviour
  private Transform Target;
 
     private BoxCollider2D Onca, madeiraCollider;
+    public static Enemy tt;
+  
  
     void Start()
     {
+      tt=this;
        /* Onca = GetComponent<BoxCollider2D>();
         madeiraCollider = GameObject.Find("madeira").GetComponent<BoxCollider2D>();
 
@@ -38,6 +41,9 @@ public class Enemy : MonoBehaviour
            // Destroy(gameObject);
             Destroy(collision.gameObject);
         }*/
+     }
+     public void onça(){
+      Speed+=6;
      }
      
 }

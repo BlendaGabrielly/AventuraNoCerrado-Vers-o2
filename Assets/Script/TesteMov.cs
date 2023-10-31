@@ -18,7 +18,7 @@ public class TesteMov : MonoBehaviour
     [SerializeField] private float movHorizontal;
     [SerializeField] private float velocidadeMov=8f;
     [SerializeField] private float forcaPulo;
-    [SerializeField] private float velobat=2f;
+    [SerializeField] private float velobat=4f;
     [SerializeField] private bool isJumping = false;
     [SerializeField] private bool segundoPulo, conta_pulo;
     [SerializeField] private int vidasAtual ;
@@ -26,6 +26,7 @@ public class TesteMov : MonoBehaviour
 
     private bool estaPulando;
     public Cenario cen;
+    public float velocidadeNormal=8f;
 
 
     void Start()
@@ -115,18 +116,19 @@ public class TesteMov : MonoBehaviour
         if(collider.gameObject.tag=="Arbusto"){
               velocidadeMov =velobat;
               cam.ShakeIt();
-              Invoke("retorno", 2f);
+              InvokeRepeating("retorno",0.2f,0.1f );
            }      
-        
-
+    
         if(collider.gameObject.tag=="Caju"){
            quantidadeCajus = quantidadeCajus + 1;
 
-            velocidadeMov = velocidadeMov+6;
-            Invoke("retorno", 2f); 
-            Debug.Log("pegou caju: " + quantidadeCajus); 
+            velocidadeMov += 6;
+            InvokeRepeating("reverterRetorno", 0.5f, 0.1f);
+           // Enemy.tt.onça();
+            Debug.Log("pegou caju: " + quantidadeCajus);
 
-            if (quantidadeCajus > 2)
+
+            if (quantidadeCajus > 2 && velocidadeMov==8f)
             {
                 Debug.Log("pegou caju, entrou no if");
                 retorno();
@@ -139,9 +141,33 @@ public class TesteMov : MonoBehaviour
         }
     }
 
-    void retorno(){
-           velocidadeMov=8f;
-        }  void atirar(){
+    void retorno()
+{
+    if (velocidadeMov < velocidadeNormal)
+    {
+        velocidadeMov += 2;
+    }
+    else
+    {
+        // Se a velocidade já atingiu a velocidade normal, paramos de invocar a função "retorno"
+        velocidadeMov = velocidadeNormal;
+        CancelInvoke("retorno");
+    }
+}
+void reverterRetorno(){
+    if (velocidadeMov > velocidadeNormal)
+    {
+        velocidadeMov -= 1;
+    }
+    else
+    {
+        velocidadeMov = velocidadeNormal; // Certifique-se de definir a velocidade para o valor normal
+        CancelInvoke("reverterRetorno");
+    }
+}
+
+
+    void atirar(){
         if (Input.GetKeyDown(KeyCode.T)){
           Shoot();
       }

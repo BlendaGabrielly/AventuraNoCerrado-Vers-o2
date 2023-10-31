@@ -9,6 +9,7 @@ public class Historia : MonoBehaviour
     public GameObject[] historia;
     int index;
     public string lvlName; 
+    public GameObject card;
     void Start()
     {
         index=0;
@@ -56,6 +57,7 @@ public void Previous()
     public void startGame()
     {
         SceneManager.LoadScene("Fase 1");
+        //card.SetActive(true);
     }
 
 
