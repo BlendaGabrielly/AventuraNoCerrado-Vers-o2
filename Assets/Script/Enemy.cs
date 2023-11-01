@@ -38,9 +38,20 @@ public class Enemy : MonoBehaviour
       Speed+=8f;
        Invoke("RestaurarSpeed", 1f);
      }
+    public void tronco(){
+      Speed+=12;
+
+      Invoke("Retarda", 4f);
+      Invoke("RestaurarSpeed", 5f);
+
+    }
    private void RestaurarSpeed(){
     Speed = 4f;
 }
+  private void Retarda(){
+    Speed -= 2f;
+}
+  
      
 }
 

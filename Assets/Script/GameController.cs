@@ -10,9 +10,8 @@ public class GameController : MonoBehaviour
     public static GameController insta;
     private bool isPaused = false;
     public AudioSource audioSource;
-
-     public GameObject Card;
     private bool isCardActive = true;
+    public GameObject caju;
     
 
 
@@ -34,6 +33,7 @@ public class GameController : MonoBehaviour
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
      Debug.Log("Clicavel");
      Continuar();
+     caju.SetActive(false);
      
   }
 

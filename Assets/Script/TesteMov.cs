@@ -117,7 +117,7 @@ public class TesteMov : MonoBehaviour
               velocidadeMov =velobat;
               cam.ShakeIt();
               InvokeRepeating("retorno",0.2f,0.1f );
-             //Enemy.tt.Onça_tronco();
+              Enemy.tt.tronco();
 
            }      
     
