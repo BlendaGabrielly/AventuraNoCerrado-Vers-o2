@@ -139,9 +139,6 @@ public class TesteMov : MonoBehaviour
             }
             
         }
-        if(collider.gameObject.tag=="ultima"){
-          cen.DelayedRecycle();
-        }
     }
 
     void retorno()

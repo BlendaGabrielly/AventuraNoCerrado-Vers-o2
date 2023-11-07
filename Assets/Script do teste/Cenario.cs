@@ -21,13 +21,15 @@ public class Cenario : MonoBehaviour
 
     void Start()
     {
-         
-        // Verifica se o objeto do jogador está presente na cena
+        Initialize(); // Quando o jogo começa, executa a função Initialize.
+    }
+
+    void Initialize()
+    {
         if (GameObject.FindGameObjectWithTag("Player") != null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
-            // Instancia as plataformas e adiciona-as à lista, criando um deslocamento entre elas
             for (int i = 0; i < platforms.Count; i++)
             {
                 Transform p = Instantiate(platforms[i], new Vector3(i * 52, 0, 0), transform.rotation).transform;
@@ -35,7 +37,6 @@ public class Cenario : MonoBehaviour
                 offset += 52;
             }
 
-            // Desativa objetos do cenário (game, game1, game2) e define o ponto de referência da plataforma inicial
             game.SetActive(false);
             game1.SetActive(false);
             game2.SetActive(false);
@@ -49,44 +50,39 @@ public class Cenario : MonoBehaviour
 
     void Update()
     {
-        
-
-        // Calcula a distância entre a posição do jogador e o ponto de referência da plataforma atual
-        float distance = player.position.x - currentPlatsPoint.position.x;
-
-        // Verifica se o jogador se moveu o suficiente para reciclar a plataforma atual
-        if (distance >= 5)
+        if (player != null && currentPlatsPoint != null)
         {
-            // Recicla a plataforma atual, incrementa o índice e atualiza o ponto de referência da próxima plataforma
-            Recycle(currentPlat[plataformaIndex].gameObject);
-            plataformaIndex++;
-            if (plataformaIndex > currentPlat.Count - 1)
-            {
-                plataformaIndex = 0;
-            }
+            float distance = player.position.x - currentPlatsPoint.position.x;
 
-            currentPlatsPoint = currentPlat[plataformaIndex].GetComponent<PointE>().point;
+            if (distance >= 5)
+            {
+                if (!currentPlat[plataformaIndex].GetComponent<PointE>().passedByPlayer)
+                {
+                    currentPlat[plataformaIndex].GetComponent<PointE>().passedByPlayer = true;
+                    StartCoroutine(DelayRecycle(currentPlat[plataformaIndex].gameObject));
+                }
+
+                plataformaIndex++;
+                if (plataformaIndex > currentPlat.Count - 1)
+                {
+                    plataformaIndex = 0;
+                }
+
+                currentPlatsPoint = currentPlat[plataformaIndex].GetComponent<PointE>().point;
+            }
         }
     }
-    public void DelayedRecycle()
-{
-    Invoke("Recycle", 60f);
-    Debug.Log("DelayedRecycle chamado");
-}
 
-//public void RecycleFirstPlatform()
-//{
-   // Recycle(currentPlat[0].gameObject);
-//}
+    IEnumerator DelayRecycle(GameObject platform)
+    {
+        yield return new WaitForSeconds(3f); // Espera por 3 segundos
+        Recycle(platform);
+        platform.GetComponent<PointE>().passedByPlayer = false; // Reseta o marcador após reciclar a plataforma
+    }
 
-
-    // Reposiciona a plataforma passada como argumento e atualiza o deslocamento
     public void Recycle(GameObject platform)
     {
         platform.transform.position = new Vector3(offset, 0, 0);
         offset += 52;
     }
-
-
 }
-

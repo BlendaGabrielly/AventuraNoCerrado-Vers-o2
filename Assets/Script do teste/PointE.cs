@@ -5,5 +5,6 @@ using UnityEngine;
 public class PointE : MonoBehaviour
 {
     public Transform point;
+    public bool passedByPlayer = false; 
     
 }
