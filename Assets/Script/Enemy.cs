@@ -35,14 +35,14 @@ public class Enemy : MonoBehaviour
         }*/
      }
      public void Onça_Caju(){
-      Speed+=8f;
-       Invoke("RestaurarSpeed", 1f);
+      Speed+=5f;
+       Invoke("RestaurarSpeed", 0.4f);
      }
     public void tronco(){
-      Speed+=10f;
+      Speed+=15f;
 
       Invoke("Retarda", 2f);
-      Invoke("RestaurarSpeed", 4f);
+      Invoke("RestaurarSpeed", 7f);
 
     }
    private void RestaurarSpeed(){

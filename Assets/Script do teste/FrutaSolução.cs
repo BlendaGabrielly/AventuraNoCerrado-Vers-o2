@@ -13,7 +13,7 @@ public class FrutaSolução : MonoBehaviour
         sr = GetComponent<SpriteRenderer>(); // Obtém o componente SpriteRenderer do objeto
         sr.enabled = true; // Garante que o SpriteRenderer está ativado
         circle = GetComponent<CircleCollider2D>(); // Obtém o componente CircleCollider2D do objeto
-        InvokeRepeating("Sprite", 5f, 5f); // Chama o método Sprite a cada 5 segundos
+        InvokeRepeating("Sprite", 8f, 5f); // Chama o método Sprite a cada 5 segundos
         sound = GetComponent<AudioSource>();
     }
 
